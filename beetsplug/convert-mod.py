@@ -414,13 +414,12 @@ class ConvertPlugin(BeetsPlugin):
                 if should_transcode(item, fmt):
                     converted = replace_ext(converted, ext)
             else:
-                print("my branch")
                 original = item.path
                 if should_transcode(item, fmt):
                     dest = replace_ext(dest, ext)
                 else:
                     self._log.debug("skipping {} as did not qualify", item)
-                    return 
+                    continue
                 converted = dest
 
             # Ensure that only one thread tries to create directories at a
