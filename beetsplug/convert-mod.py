@@ -562,6 +562,10 @@ class ConvertPlugin(BeetsPlugin):
             return
 
         if not pretend:
+            # hrfee: quick ugly check to ensure we're not copying to a skipped album
+            if not os.path.isdir(os.path.dirname(dest)):
+                self._log.debug("skipping copying album art as converted album doesn't exist")
+                return 
             util.mkdirall(dest)
 
         if os.path.exists(util.syspath(dest)):
