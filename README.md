@@ -8,6 +8,8 @@ In my config, the `paths` section uses the `inline` plugin to decide which or `M
 
 Additionally, the order of operations (at least with `auto_keep` is changed, so that transcoding is done as the last step and so includes all metadata, no clue why this wasn't the case before.
 
+Finally, at least in normal import operation, a copy isn't made if no transcoding is needed, rather nothing happens.
+
 # install
 you can probably do it with `pluginpath:` but I haven't tried, I added a `convert-mod.pth` to the venv I run beets in's `lib/pythonx.x/site-packages` pointing to the locally cloned git repository
 

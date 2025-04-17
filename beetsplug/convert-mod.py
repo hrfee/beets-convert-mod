@@ -12,7 +12,7 @@
 # The above copyright notice and this permission notice shall be
 # included in all copies or substantial portions of the Software.
 
-"""Converts tracks or albums to external directory (with samplerate trigger"""
+"""Converts tracks or albums to external directory (modifications by hrfee)"""
 
 import logging
 import os
@@ -405,9 +405,13 @@ class ConvertPlugin(BeetsPlugin):
                 if should_transcode(item, fmt):
                     converted = replace_ext(converted, ext)
             else:
+                print("my branch")
                 original = item.path
                 if should_transcode(item, fmt):
                     dest = replace_ext(dest, ext)
+                else:
+                    self._log.debug("skipping {} as did not qualify", item)
+                    return 
                 converted = dest
 
             # Ensure that only one thread tries to create directories at a
