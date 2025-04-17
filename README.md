@@ -8,5 +8,39 @@ In my config, the `paths` section uses the `inline` plugin to decide which or `M
 
 Additionally, the order of operations (at least with `auto_keep` is changed, so that transcoding is done as the last step and so includes all metadata, no clue why this wasn't the case before.
 
-# License
+# install
+you can probably do it with `pluginpath:` but I haven't tried, I added a `convert-mod.pth` to the venv I run beets in's `lib/pythonx.x/site-packages` pointing to the locally cloned git repository
+
+# config
+
+renamed the section to `convert-mod`. Here's what I use:
+```yaml
+plugins: inline fromfilename mbgenres fetchart embedart ftintitle scrub convert-mod
+
+import:
+  write: yes
+  move: yes
+
+paths:
+  default: $normorhq/${albumartist} - $album%aunique{}/$track - $title
+
+item_fields:
+  normorhq: |
+    if samplerate <= 48000: return 'Music'
+    return 'Music-HQ'
+
+convert-mod:
+  auto_keep: yes
+  max_samplerate: 48000 # The added option
+  tmpdir: /my/music/tmp
+  dest: /my/music/Music-LQ
+  format: flac
+  embed: no
+  formats:
+    flac: /path/to/my/transcode-script.sh $source $dest # A FFMPEG wrapper which divides the samplerate by 2
+  paths:
+    default: ${albumartist} - $album%aunique{}/$track - $title
+```
+
+# license
 See convert.py's header.
