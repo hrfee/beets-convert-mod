@@ -285,7 +285,7 @@ class ConvertPlugin(BeetsPlugin):
                 playlist,
             ) = self._get_opts_and_config(empty_opts)
 
-            items = task.imported_items()
+            items = album.items()
             self._parallel_convert(
                 dest,
                 False,
@@ -297,7 +297,8 @@ class ConvertPlugin(BeetsPlugin):
                 threads,
                 items,
             )
-            self._cleanup(task, None)
+            # Cleanup isn't needed, the temp dir isn't used for auto_keep mode
+            # self._cleanup(task, None)
 
     # Utilities converted from functions to methods on logging overhaul
 
