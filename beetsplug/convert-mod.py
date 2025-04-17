@@ -297,6 +297,15 @@ class ConvertPlugin(BeetsPlugin):
                 threads,
                 items,
             )
+            if self.config["copy_album_art"]:
+                self.copy_album_art(
+                    album,
+                    dest,
+                    path_formats,
+                    pretend,
+                    link,
+                    hardlink
+                )
             # Cleanup isn't needed, the temp dir isn't used for auto_keep mode
             # self._cleanup(task, None)
 
@@ -463,7 +472,7 @@ class ConvertPlugin(BeetsPlugin):
                     msg = (
                         "Hardlinking"
                         if hardlink
-                        else ("Linking" if link else "Copying")
+                        else ("Linking" if link else "Skipping")
                     )
 
                     self._log.info(
@@ -474,8 +483,8 @@ class ConvertPlugin(BeetsPlugin):
                         util.hardlink(original, converted)
                     elif link:
                         util.link(original, converted)
-                    else:
-                        util.copy(original, converted)
+                    # else:
+                        # util.copy(original, converted)
 
             if pretend:
                 continue
